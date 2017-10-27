@@ -46,7 +46,7 @@ $(function() {
     </fieldset>
 
     <button id="Submit" class="pure-button pure-input-1-2 pure-button-primary">Send</button>
-</$form>
+</form>
 <p>
    <span class="error" style="display:none">Please fill all fields</span>
    <span class="success" style="display:none">SMS Sent</span>
