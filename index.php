@@ -59,8 +59,22 @@ require 'config.php';
 $auth_token = get_auth_token($consumer_key,$consumer_secret);
 
 $result = provision_number($auth_token,$notify_url);
-echo "Number Provisioned: ".$result['destinationAddress']."<br>\n";
-echo file_get_contents( "sms.txt" );
+echo "Sender Number: ".$result['destinationAddress']."<br>\n";
+echo "<table class=pure-table><thead><tr><th>Time</th><th>ID</th><th>To</th><th>From</th><th>Message</th><tbody>";
+
+$sms_file = realpath(dirname(__FILE__))."/".$sms_file;
+$sms_list = array_reverse(file($sms_file));
+foreach($sms_list as $sms_no => $sms_data)
+{
+  $sms_data = explode("|",$sms_data);
+  $to = $sms_data[0];
+  $from = $sms_data[1];
+  $message = $sms_data[2];
+  $time = $sms_data[3];
+  $id = $sms_data[4];
+  $sms_table .= "<tr><td>".$time."</td><td>".$id."</td><td>".$to."</td><td>".$from."</td><td>".$message."</td></tr>\r\n";
+}
+echo $sms_table."</tbody><table>";
 ?>
 
 </body>

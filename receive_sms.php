@@ -4,11 +4,12 @@ require 'func.php';
 require 'config.php';
 
 $message = json_decode(file_get_contents('php://input'), true);
-$current = file_get_contents("sms.txt");
+$sms_file = realpath(dirname(__FILE__)).$sms_file;
 
 foreach($message as $key => $value)
 {
-  $append .= "$key: $value<br>\n";
+  $sms_data .= "$value|";
 }
-file_put_contents("sms.txt", $append);
+$sms_data .= "\r\n";
+file_put_contents("sms.data",$sms_data, FILE_APPEND | LOCK_EX);
 ?>
