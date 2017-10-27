@@ -37,6 +37,7 @@ $(function() {
 </head>
 
 <body>
+
 <form class="pure-form pure-form-stacked" action="send_sms.php" method="POST">
     <fieldset>
         <legend>WEB SMS - Australian number only</legend>
@@ -50,6 +51,18 @@ $(function() {
    <span class="error" style="display:none">Please fill all fields</span>
    <span class="success" style="display:none">SMS Sent</span>
 </p>
+
+<?php
+require 'func.php';
+require 'config.php';
+
+$auth_token = get_auth_token($consumer_key,$consumer_secret);
+
+$result = provision_number($auth_token,$notify_url);
+echo "Number Provisioned: ".$result['destinationAddress']."<br>\n";
+echo file_get_contents( "sms.txt" );
+?>
+
 </body>
 
 </html>
